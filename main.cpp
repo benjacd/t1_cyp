@@ -1,6 +1,3 @@
-/* *********************
-Author: Exploring Bits
-********************* */
 #include <iostream>
 #include <math.h>
 #include <string>
@@ -59,8 +56,13 @@ void newtonRaphson()
     }
     cout << "\nThe value of the root is " << x << endl;
 }
-int main()
+int main(int argc,char *argv[])
 {
+    for (int i=1; i<argc;i++)
+    {
+     cout <<argv[i]<<endl;
+    }
+    
     newtonRaphson();
     return 0;
 }

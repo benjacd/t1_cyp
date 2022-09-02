@@ -9,8 +9,8 @@ CFLAGS = -Wall
 # ****************************************************
 # Targets needed to bring the executable up to date
  
-main:
-	$(CC) $(CFLAGS) -c main.cpp -o main
+main: main.cpp
+	$(CC) $(CFLAGS) main.cpp -o main
 
 
 # g++ main.cpp -o main
