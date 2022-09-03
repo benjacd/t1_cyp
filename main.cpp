@@ -88,19 +88,21 @@ vector<float> vect_pol(char *argv[], int gra)
 }
 
 float evaluar(vector<float> vectors, int largo,float x);
-void derivar(vector<float> vectors, int largo, vector<float> vector_derivado);
+vector<float>  derivar(vector<float> vectors, int largo);
 float metodoNR(vector<float> vectors, int largo, float x,vector<float> vector_derivado,int cont);
 
 
 int main(int argc, char *argv[]) // SI EL COEF ES 1 SE DEBE INGRESAR
 {
-    int gra = encontrar_gra(argv);
-    vector<float> arreglo = vect_pol(argv, gra);
-    vector<float> vector_derivado(arreglo.size()-1);
-    float resultado;
-    derivar(arreglo,arreglo.size(),vector_derivado);
-   resultado = metodoNR (arreglo,arreglo.size(),1.0,vector_derivado,0);
+    int gra = encontrar_gra(argv);  // Declara el grado
+    vector<float> arreglo(gra+1, 0); // Declara arreglo polinomico
+    arreglo = vect_pol(argv, gra);    // Iguala el arreglo a vector creado
+    vector<float> vector_derivado(arreglo.size()-1); // Crea vector derivado
+    float resultado;  // Define variable resultado
+    vector_derivado = derivar(arreglo,arreglo.size());// iguala vector derivado
+    resultado = metodoNR (arreglo,arreglo.size(),1.0,vector_derivado,0);
     std::cout << "La aproximacion es x = "<<resultado<<" para que f(x) se acerque a 0" << std::endl;
+
     return 0;
 }
 
@@ -113,11 +115,14 @@ float evaluar(vector<float> vectors, int largo,float x){
     return suma;
 }
 
-void derivar(vector<float> vectors, int largo, vector<float> vector_derivado){
-    int i;
-    for(i=0;i<largo-1;i++){
+vector<float> derivar(vector<float> vectors, int largo)
+{
+    vector<float> vector_derivado(largo);
+    for(int i=0;i<largo-1;i++)
+    {
        vector_derivado[i] = vectors[i+1]*(i+1); 
     }
+    return vector_derivado;
 }
 
 float metodoNR(vector<float> vectors, int largo,float x,vector<float> vector_derivado,int cont)
