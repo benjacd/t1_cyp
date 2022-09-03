@@ -2,63 +2,8 @@
 #include <math.h>
 #include <string>
 #include <cstdlib>
+#include <algorithm>
 using namespace std;
-/*
-double inputPolynomial(double coeff[], double n, double x)
-{
-    double fx = 0.0;
-    for (int i = n; i >= 0; i--)
-    {
-        double temp = coeff[i];
-        if (i == 0)
-            fx = fx + temp;
-        else
-            fx = fx + (pow(x, i) * temp);
-    }
-    return fx;
-}
-double getDerivative(double coeff[], double n, double x, double vfx)
-{
-    double dfx = 0;
-    for (int i = n; i >= 0; i--)
-    {
-        double temp = coeff[i];
-        if (i == 1)
-        {
-            dfx = dfx + temp;
-            return dfx;
-        }
-        else
-            dfx = dfx + (pow(x, i - 1) * temp * i);
-    }
-}
-void newtonRaphson()
-{
-    int n;
-    cout << "Enter the highest degree of the polynomial : ";
-    cin >> n;
-    double coeff[n + 1];
-    for (int i = n; i >= 0; i--)
-    {
-        double temp;
-        cout << "Enter the coefficient of " << i << " degree : ";
-        cin >> coeff[i];
-    }
-    double x;
-    cout << "Enter the initial assumed value of x : ";
-    cin >> x;
-    while (true)
-    {
-        double fx = inputPolynomial(coeff, n, x);
-        double dfx = getDerivative(coeff, n, x, fx);
-        double h = fx / dfx;
-        if (abs(h) < 0.00001)
-            break;
-        x = x - h;
-    }
-    cout << "\nThe value of the root is " << x << endl;
-}
-*/
 int encontrar_gra(char *argv[])
 {
     int gra = 0;
@@ -76,72 +21,74 @@ int encontrar_gra(char *argv[])
     }
     return gra; //Si no encuentra nada grado = 0
 }
+string removeSpaces(const string& s) {  //METODO QUE REMUEVE ESPACIOS EN BLANCOS
+    string tmp(s);
+    tmp.erase(std::remove(tmp.begin(), tmp.end(), ' '), tmp.end());
+    return tmp;
+}
 void vect_pol(char *argv[], int gra)
 {
-    int n = gra + 1;
-    int pos = 0, coef = 1, signo = 1 ; //inicializa la pos y el coef
+    int n = gra + 1,k=0;;
+    int pos = 0, pos_aux = 0; float coef = 0; //inicializa la pos y el coef
     float v[n];
     for (int i = 0; i<n; i++)
     {v[i]=0;} //Coloca 0 en todo el arreglo
-
-    for (int i=0 ; argv[1][i] != '\0'; i++) //recorre el strig
+    for (int i=0 ; argv[1][i] != '\0'; i++) //recorre todo
     {
         if(argv[1][i] == 'x') //Encuentra la primera x
         {
+            string str,str_aux;
+            while(pos_aux<=i-1)  //INGRESA A UN STRING LOS CHAR
+            {
+             str.append(1, argv[1][pos_aux]);
+             pos_aux++;
+            }
+            str_aux = removeSpaces(str);
+            coef = std::stof(str_aux);  //Convierte el string en un flotante con signo y to ja
             if(argv[1][i+1] == '*')  //Verifica si hay algun asterisco
             {
-               pos = argv[1][i+3] - '0' ; // Convierte la posicion del coeficiente}
-               if (pos == gra) //Verifica un menos en la primera iteracion jejej
-               {
-                  if(argv[1][i-2] == '-') // Verifica si es menos
-                    {signo = signo * -1;}
-               }
-               else if(argv[1][i-3] == '-') // Verifica si es menos
-               {signo = signo * -1;}   // SI es menos multiplica por -1
-               coef = argv[1][i-1] - '0'; // Convierte el coeficiente
-               coef = coef * signo;
-               v[pos] = coef; // COloca el coef en la pos
-               signo = 1;  // Vuelve el signo a ser +
+                pos = argv[1][i+3] - '0' ; // Convierte la posicion del coeficiente}
+                pos_aux= i+5;
             }
-            else // Caso que no haya exp
+            else
             {
-                if(argv[1][i-3] == '-') // Verifica si es menos
-                {signo = signo * -1;}
-                coef = argv[1][i-1] - '0';
-                coef = coef * signo;
-                v[1] = coef; // Coloca el coef en la pos
-                signo = 1;
+                pos = 1;
+                pos_aux= i+1;
             }
         }
-        else // Si no encuentra la x
-        { 
-
-            if(argv[1][i] == '+' || argv[1][i] == '-')
-            {
-               if(argv[1][i] == '-') // Verifica si es menos
-               {signo = signo * -1;}   // SI es menos multiplica por -1 
-               coef = argv[1][i+2] - '0';
-               coef = coef * signo;
-               if(coef == -72){coef = 0;}
-               v[0] = coef; // COloca el coef en la pos 
-               signo = 1;  // Vuelve el signo a ser +
-            }
-        } 
+        v[pos] = coef;
+        k = pos_aux;
     }
+    /*  //FAlTA ARREGLAR ESTO
+    if (argv[1][k] != '\0')
+        {
+            pos = 0;
+            string str,str_aux;
+            while(argv[1][k] != '+' || argv[1][k] != '-' || argv[1][k] == '\0'){ k++; }
+            if(argv[1][k] != '\0')
+            {
+            while(argv[1][k] != '\0')  //INGRESA A UN STRING LOS CHAR
+            {
+             str.append(1, argv[1][k]);
+             k++;
+            }
+            str_aux = removeSpaces(str);
+            coef = std::stof(str_aux);  //Convierte el string en un flotante con signo y to ja
+            v[pos] = coef;
+            }
+        }
+        */
+    
     for (int i = 0; i<n; i++)
     {
         cout<<v[i]<<" ";
     }
+    
     cout<<endl;
 }
 int main(int argc,char *argv[]) //SI EL COEF ES 1 SE DEBE INGRESAR
 {
-     //cout <<argv[1][0]<<endl;
-     //int gra = argv[1][0] - '0';    //CONVIERTE EL CHAR A ENTERO JEJ
     int gra = encontrar_gra(argv);
-    //cout <<gra<<endl;
-    vect_pol(argv,gra);
-    cout<<"TRISTE"<<endl;
-    //newtonRaphson();
+     vect_pol(argv,gra);
     return 0;
 }
