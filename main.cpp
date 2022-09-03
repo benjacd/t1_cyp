@@ -43,28 +43,27 @@ void vect_pol(char *argv[], int gra)
              str.append(1, argv[1][pos_aux]);
              pos_aux++;
             }
-            str_aux = removeSpaces(str);
+            str_aux = removeSpaces(str); // Remueve posibles espacios en blanco
             coef = std::stof(str_aux);  //Convierte el string en un flotante con signo y to ja
             if(argv[1][i+1] == '*')  //Verifica si hay algun asterisco
             {
-                pos = argv[1][i+3] - '0' ; // Convierte la posicion del coeficiente}
+                pos = argv[1][i+3] - '0' ; // Convierte la posicion segun el numero elevado
                 pos_aux= i+5;
             }
-            else
+            else // Si no hay asterisco es elvado a 1, pos = 1
             {
                 pos = 1;
                 pos_aux= i+1;
             }
         }
-        v[pos] = coef;
-        k = pos_aux;
+        v[pos] = coef;  // Ingresa al arreglo la pos
+        k = pos_aux; // Para ingresar el ultimo dato
     }
-    /*  //FAlTA ARREGLAR ESTO
-    if (argv[1][k] != '\0')
+    if (argv[1][k] != '\0')  //Agrega el ult num al arreglo
         {
             pos = 0;
             string str,str_aux;
-            while(argv[1][k] != '+' || argv[1][k] != '-' || argv[1][k] == '\0'){ k++; }
+            while( (argv[1][k] != '+' || argv[1][k] != '-') && argv[1][k] == '\0'){ k++;}
             if(argv[1][k] != '\0')
             {
             while(argv[1][k] != '\0')  //INGRESA A UN STRING LOS CHAR
@@ -77,8 +76,6 @@ void vect_pol(char *argv[], int gra)
             v[pos] = coef;
             }
         }
-        */
-    
     for (int i = 0; i<n; i++)
     {
         cout<<v[i]<<" ";
