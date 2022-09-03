@@ -4,7 +4,10 @@
 #include <cstdlib>
 #include <algorithm>
 #include <vector>
+#include <cmath>
+
 using namespace std;
+
 int encontrar_gra(char *argv[])
 {
     int gra = 0;
@@ -83,9 +86,47 @@ vector<float> vect_pol(char *argv[], int gra)
     }
     return v;
 }
+
+float evaluar(vector<float> vector, int largo,float x);
+void derivar(vector<float> vector, int largo, vector<float> vector_derivado);
+float metodoNR(vector<float> vector, int largo, float x,vector<float> vector_derivado,int cont);
+
+
 int main(int argc, char *argv[]) // SI EL COEF ES 1 SE DEBE INGRESAR
 {
     int gra = encontrar_gra(argv);
-    vect_pol(argv, gra);
+    vector<float> arreglo = vect_pol(argv, gra);
+    vector<float> vector_derivado[arreglo.size()-1], resultado;
+    derivar(arreglo,arreglo.size(),vector_derivado);
+    float resultado = metodoNR (arreglo,arreglo.size(),1.0,vector_derivado,0);
+    std::cout << "La aproximacion es x = "<<resultado<<" para que f(x) se acerque a 0" << std::endl;
     return 0;
+}
+
+float evaluar(vector<float> vector, int largo,float x){
+    int i;
+    float suma=0;
+    for(i=0;i<largo;i++){
+        suma=suma+vector[i]*pow(x,i);
+    }
+    return suma;
+}
+
+void derivar(vector<float> vector, int largo, vector<float> vector_derivado){
+    int i;
+    for(i=0;i<largo-1;i++){
+       vector_derivado[i] = vector[i+1]*(i+1); 
+    }
+}
+
+float metodoNR(vector<float> vector, int largo,float x,vector<float> vector_derivado,int cont){
+    
+    if(cont==99) return x;
+    if(evaluar(vector,largo,x)==0){
+        std::cout << "La solucion es x = "<<x<<" para que f(x) = 0" << std::endl;
+    }
+    else{
+        x = x - (evaluar(vector,largo,x)/evaluar(vector_derivado,largo-1,x));
+        metodoNR(vector,largo,x,vector_derivado,cont+1);
+    }
 }
