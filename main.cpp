@@ -141,6 +141,7 @@ int main(int argc,char *argv[]) //SI EL COEF ES 1 SE DEBE INGRESAR
     int gra = encontrar_gra(argv);
     //cout <<gra<<endl;
     vect_pol(argv,gra);
+    cout<<"TRISTE"<<endl;
     //newtonRaphson();
     return 0;
 }
