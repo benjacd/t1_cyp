@@ -8,6 +8,16 @@
 
 using namespace std;
 
+void Integrantes()
+{
+    cout << "****Los integrantes son****"<<endl;
+    cout <<"Benjamin Castro"<<endl;
+    cout << "Enzo Valle"<<endl;
+    cout << "Paulo Hernandez"<<endl;
+    cout << "German Ramirez"<<endl;
+    cout <<endl;
+}
+
 int encontrar_gra(char *argv[])
 {
     int gra = 0;
@@ -94,6 +104,7 @@ float metodoNR(vector<float> vectors, int largo, float x,vector<float> vector_de
 
 int main(int argc, char *argv[]) // SI EL COEF ES 1 SE DEBE INGRESAR
 {
+    Integrantes();
     int gra = encontrar_gra(argv);  // Declara el grado
     vector<float> arreglo(gra+1, 0); // Declara arreglo polinomico
     arreglo = vect_pol(argv, gra);    // Iguala el arreglo a vector creado
