@@ -25,7 +25,7 @@ make main
 
 Importante
 ```bash
-Para poder utilizar de forma correcta se debera tener en consideración la siguiente condición:
+Para poder utilizar de forma correcta el programa, se debera tener en consideración la siguiente condición:
 Para las X que no esten acompañadas con un coeficiente numero debera tener la forma 1x.
 Ejemplo: 
 ./main " 1x**2 + 1x-1"
