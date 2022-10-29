@@ -2,7 +2,7 @@
 Taller 1 para la asignatura de Computación paralela y distribuida. 
 
 ## Integrantes
-- Benjamin Alexander Castro Donoso Barrera Salas
+- Benjamin Alexander Castro Donoso
 - German Alejandro Ramirez Obaid
 - Enzo Maximiliano Valle Mateluna
 - Paulo Andres Hernandez Torreblanca
